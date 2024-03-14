@@ -1,0 +1,132 @@
+<definitions name= "CalcularService"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://localhost:3000/calcular"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             targetNamespace="http://localhost:3000/calcular">
+
+    <types>
+        <xsd:schema>
+        <xsd:element name="SumRequest">
+            <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="num1" type="xsd:float"/>
+                <xsd:element name="num2" type="xsd:float"/>
+            </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="SumResponse">
+            <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="result" type="xsd:float"/>
+            </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+        </xsd:schema>
+    </types>
+
+
+    
+    <!-- Definición de mensajes -->
+    
+    <message name="SumRequest">
+        <part name="num1" type="xsd:float"/>
+        <part name="num2" type="xsd:float"/>
+    </message>
+    <message name="SumResponse">
+        <part name="result" type="xsd:float"/>
+    </message>
+ 
+    <message name="SubtractRequest">
+        <part name="num1" type="xsd:float"/>
+        <part name="num2" type="xsd:float"/>
+    </message>
+    <message name="SubtractResponse">
+        <part name="result" type="xsd:float"/>
+    </message>
+
+    <message name="MultiplyRequest">
+        <part name="num1" type="xsd:float"/>
+        <part name="num2" type="xsd:float"/>
+    </message>
+    <message name="MultiplyResponse">
+        <part name="result" type="xsd:float"/>
+    </message>
+
+    <message name="DivideRequest">
+        <part name="num1" type="xsd:float"/>
+        <part name="num2" type="xsd:float"/>
+    </message>
+    <message name="DivideResponse">
+        <part name="result" type="xsd:float"/>
+    </message>
+    
+    <!-- Definición de portType -->
+    <portType name="CalcularPortType">
+        <operation name="sumar">
+            <input message="tns:SumRequest"/>
+            <output message="tns:SumResponse"/>
+        </operation>
+        <operation name="restar">
+            <input message="tns:SubtractRequest"/>
+            <output message="tns:SubtractResponse"/>
+        </operation>
+        <operation name="multiplicar">
+            <input message="tns:MultiplyRequest"/>
+            <output message="tns:MultiplyResponse"/>
+        </operation>
+        <operation name="dividir">
+            <input message="tns:DivideRequest"/>
+            <output message="tns:DivideResponse"/>
+        </operation>
+    </portType>
+    
+    <!-- Definición de binding -->
+    <binding name="CalcularBinding" type="tns:CalcularPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="sumar">
+            <soap:operation soapAction="urn:sumar"/>
+            <input>
+                <soap:body use="encoded" namespace="http://localhost:3000/calcular"
+                ncodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="restar">
+            <soap:operation soapAction="urn:restar"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="multiplicar">
+            <soap:operation soapAction="urn:multiplicar"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="dividir">
+            <soap:operation soapAction="urn:dividir"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <!-- Definición de servicio -->
+    <service name="CalcularService">
+        <port name="CalcularPort" binding="tns:CalcularBinding">
+            <soap:address location="http://localhost:3000/calcular"/>
+        </port>
+    </service>
+</definitions>
